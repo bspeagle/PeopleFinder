@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" lang="en">
+	<head>
+		<meta charset="utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    	<title>Locate. People. Destroy.</title>
+    	<link rel="stylesheet" href="css/foundation.css" />
+    	<link rel="stylesheet" href="css/animate.css" />
+    	<script src="js/vendor/modernizr.js"></script>
+    </head>
+    <body>
+    	<nav class="top-bar" data-topbar="">
+    		<ul class="title-area">
+      			<!-- Title Area -->
+      			<li class="name">
+        			<h1><a href="/PeopleFinder">People Locator</a></h1>
+      			</li>
+      			<li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+    		</ul>
+    		<!--<section class="top-bar-section">
+      			<ul class="right">
+        			<li class="divider"></li>
+        			<li class="has-dropdown not-click">
+          				<a href="#">Main Item 1</a>
+          				<ul class="dropdown"><li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li><li class="parent-link hide-for-large-up"><a class="parent-link js-generated" href="#">Main Item 1</a></li>
+            				<li><label>Section Name</label></li>
+           	 				<li class="has-dropdown not-click">
+              					<a href="#" class="">Has Dropdown, Level 1</a>
+              					<ul class="dropdown"><li class="title back js-generated"><h5><a href="javascript:void(0)">Back</a></h5></li><li class="parent-link hide-for-large-up"><a class="parent-link js-generated" href="#">Has Dropdown, Level 1</a></li>
+                					<li><a href="#">Dropdown Options</a></li>
+					                <li><a href="#">Dropdown Options</a></li>
+					                <li><a href="#">Level 2</a></li>
+					                <li><a href="#">Subdropdown Option</a></li>
+					                <li><a href="#">Subdropdown Option</a></li>
+					                <li><a href="#">Subdropdown Option</a></li>
+              					</ul>
+            				</li>
+					        <li><a href="#">Dropdown Option</a></li>
+					        <li><a href="#">Dropdown Option</a></li>
+							<li class="divider"></li>
+					        <li><label>Section Name</label></li>
+					        <li><a href="#">Dropdown Option</a></li>
+					        <li><a href="#">Dropdown Option</a></li>
+					        <li><a href="#">Dropdown Option</a></li>
+					        <li class="divider"></li>
+					        <li><a href="#">See all →</a></li>
+          				</ul>
+        			</li>
+      			</ul>
+      </section>-->
+      	</nav>
+      	<br/><br/>
+    	<div>
+    		<form id="form" data-abide>
+    			<div class="row">
+	    			<div class="lat-field large-4 medium-4 columns">
+	    				<label>Latitude <small>required</small>
+	    					<input id="latVal" type="text" required pattern="number">
+	    				</label>
+	    				<small class="error">Latitude is required and must be a number.</small>
+	   				</div>
+	    			<div class="lon-field large-4 medium-4 columns">
+	    				<label>Longitude <small>required</small>
+	    					<input id="lonVal" type="text" required pattern="number">
+	    				</label>
+	    				<small class="error">Longitude is required and must be a number.</small>
+	    			</div>
+	   				<div class="dist-field large-4 medium-4 columns">
+	   					<label>Distance (Miles) <small>required</small>
+	   						<input id="distVal" type="text" required pattern="number">
+	   					</label>
+	   					<small class="error">Distinace is required and must be a number.</small>
+	    			</div>
+	    		</div>    		
+				<div class="row">
+					<div class="large-12 medium-12 columns">
+						<button id="actionBtn" class="button" style="width: 100%;" value="GO!">GO!</button>
+					</div>
+				</div>
+			</form>
+			<div class="row">
+				<div class="large-12 medium-12 columns">
+					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<div id="rsCont" class="large-12 medium-12 columns" style="text-align: center">
+					<div id="rsBox"></div>
+					<a id="exportBtn" href="#" style="display: none; font-size: 1.25em">Export to CSV</a>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/vendor/jquery.js"></script>
+		<script src="js/foundation.min.js"></script>
+		<script src="js/foundation/foundation.abide.js"></script>
+		<script src="js/vendor/spin.min.js"></script>
+		<script src="js/vendor/jsonToExcel.js"></script>
+		<script>
+			var rsData = '';
+			
+			jQuery(document).foundation();
+
+  			jQuery('#form').on('submit', function(e) {
+  				e.preventDefault();
+  				
+  				if (jQuery('#latVal').val() && jQuery('#lonVal').val() && jQuery('#distVal').val()) {  				
+	  				$.ajax({
+	  					url: 'showClosest.php',
+	  					type: 'GET',
+	  					dataType: 'json',
+	  					data: {
+	  						lat: jQuery('#latVal').val(),
+	  						lon: jQuery('#lonVal').val(),
+	  						dist: jQuery('#distVal').val()
+	  					}, 
+	  					beforeSend: function() {
+	  						jQuery('#actionBtn').html('Computing things...');
+	  						jQuery('#actionBtn').prop("disabled",true);
+	  					},
+	  					success: function(data) {
+	  						rsData = data;
+	  						jQuery('#exportBtn').css('display', '');
+	  						jQuery('#rsBox').html(
+	  							'<h4>' + data[0].rows_returned + ' People Found!<h4>'
+	  						);
+	  						jQuery('#actionBtn').html('Again?');
+	  						jQuery('#actionBtn').prop("disabled",false);
+	  					},
+	  					error: function(e) {
+	  						jQuery('#rsBox').html(e);
+	  					}
+	  				});
+  				}
+  				else {
+  					//don't do nothin.
+  				}
+  			});
+  			
+			jQuery('#exportBtn').on('click', function (event) {
+				JSONToCSVConvertor(rsData, "Serious Report Name", true);
+			});
+		</script>
+	</body>
+</html>

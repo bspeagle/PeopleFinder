@@ -18,7 +18,7 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-resource "aws_vpc" "vpc" {
+/*resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags {
@@ -181,13 +181,15 @@ resource "aws_security_group" "lbsg" {
     App  = "${var.app}"
     Env  = "${var.env}"
   }
-}
+}*/
+
 
 /*data "template_file" "user_data-nginx" {
   template = "${file("../files/user_data-nginx.tpl")}"
 }*/
 
-resource "aws_launch_configuration" "lConfigWeb" {
+
+/*resource "aws_launch_configuration" "lConfigWeb" {
   name            = "PeopleFinder-ASLC-WEB"
   image_id        = "ami-334e134c"
   instance_type   = "t2.micro"
@@ -266,4 +268,5 @@ resource "aws_lb_listener" "forward" {
     target_group_arn = "${aws_lb_target_group.lb-tg-web.arn}"
     type             = "forward"
   }
-}
+}*/
+

@@ -1,0 +1,8 @@
+/vendor
+.vscode
+composer.lock
+composer.phar.1
+localhost.sql
+readme.md
+storedProc.sql
+test.php

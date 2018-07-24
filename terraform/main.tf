@@ -3,12 +3,12 @@ variable "secret_key" {}
 variable "region" {}
 
 variable "app" {
-  type    = "String"
+  type    = "string"
   default = "PeopleFinder"
 }
 
 variable "env" {
-  type    = "String"
+  type    = "string"
   default = "PROD"
 }
 

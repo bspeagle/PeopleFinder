@@ -6,6 +6,8 @@ RUN apt-get install -y git
 
 RUN apt-get install -y zip
 
+RUN docker-php-ext-install mysqli
+
 #install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 

@@ -18,7 +18,7 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-/*resource "aws_vpc" "vpc" {
+resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags {
@@ -181,13 +181,11 @@ resource "aws_security_group" "lbsg" {
     App  = "${var.app}"
     Env  = "${var.env}"
   }
-}*/
-
+}
 
 /*data "template_file" "user_data-nginx" {
   template = "${file("../files/user_data-nginx.tpl")}"
 }*/
-
 
 /*resource "aws_launch_configuration" "lConfigWeb" {
   name            = "PeopleFinder-ASLC-WEB"
@@ -221,7 +219,7 @@ resource "aws_autoscaling_group" "asgWeb" {
   }
 
   depends_on = ["aws_nat_gateway.ngw"]
-}
+}*/
 
 resource "aws_lb_target_group" "lb-tg-web" {
   name     = "PeopleFinder-TG-WEB"
@@ -236,10 +234,10 @@ resource "aws_lb_target_group" "lb-tg-web" {
   }
 }
 
-resource "aws_autoscaling_attachment" "asg-tg-attach" {
+/*resource "aws_autoscaling_attachment" "asg-tg-attach" {
   autoscaling_group_name = "${aws_autoscaling_group.asgWeb.id}"
   alb_target_group_arn   = "${aws_lb_target_group.lb-tg-web.arn}"
-}
+}*/
 
 resource "aws_lb" "lb-web" {
   name               = "PeopleFinder-LB-WEB"
@@ -268,5 +266,4 @@ resource "aws_lb_listener" "forward" {
     target_group_arn = "${aws_lb_target_group.lb-tg-web.arn}"
     type             = "forward"
   }
-}*/
-
+}

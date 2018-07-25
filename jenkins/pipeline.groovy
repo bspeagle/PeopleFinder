@@ -6,12 +6,12 @@ node {
 
     stage('Build Docker Image') {
         sh '$(aws ecr get-login --no-include-email --region us-east-1)'
-        sh 'docker build . -t peopleFinder'
-        sh 'docker tag peoplefinder:latest 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
+        sh 'sudo docker build . -t peopleFinder'
+        sh 'sudo docker tag peoplefinder:latest 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 
     stage('Push Docker Image to ECR') {
-        sh 'docker push 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
+        sh 'sudo docker push 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 
     /*stage('Terraform!') {
@@ -23,5 +23,5 @@ node {
         }
     }*/
 
-    
+
 }

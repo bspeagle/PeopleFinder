@@ -15,7 +15,7 @@ node {
     }
 
     stage('Deploy updates to ECS') {
-        sh 'aws ecs update-service --cluster PeopleFinder --service PF_Deployment --force-new-deployment'
+        sh 'aws ecs update-service --cluster PeopleFinder --service PF_DEPLOY_SVC --force-new-deployment'
     }
 
     /*stage('Terraform!') {

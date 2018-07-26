@@ -14,6 +14,10 @@ node {
         sh 'docker push 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 
+    stage('Deploy updates to ECS') {
+        sh 'aws ecs update-service --cluster PeopleFinder --service PF_Deployment --force-new-deployment'
+    }
+
     /*stage('Terraform!') {
         dir ('terraform') {
             sh 'terraform init'

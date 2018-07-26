@@ -4,6 +4,12 @@ node {
         git url: 'https://github.com/bspeagle/PeopleFinder.git'
     }
 
+    stage('Get ENV variables from S3') {
+        withCredentials([usernamePassword(credentialsId: 'peopleFinder-S3', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+            sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp s3://peoplefinder-files/.env .'
+        }
+    }
+
     stage('Build Docker Image') {
         sh '$(aws ecr get-login --no-include-email --region us-east-1)'
         sh 'docker build . -t peoplefinder'

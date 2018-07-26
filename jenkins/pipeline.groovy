@@ -6,7 +6,9 @@ node {
 
     stage('Build Docker Image') {
         sh '$(aws ecr get-login --no-include-email --region us-east-1)'
+        echo 'logged in!'
         sh 'sudo docker build . -t peopleFinder'
+        echo 'image built!'
         sh 'sudo docker tag peoplefinder:latest 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 

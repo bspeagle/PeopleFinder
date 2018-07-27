@@ -1,5 +1,7 @@
 /vendor
 .vscode
+/jenkins
+/terraform
 composer.lock
 composer.phar.1
 localhost.sql

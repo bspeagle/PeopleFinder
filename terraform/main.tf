@@ -18,7 +18,7 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-resource "aws_vpc" "vpc" {
+/*resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags {
@@ -183,44 +183,6 @@ resource "aws_security_group" "lbsg" {
   }
 }
 
-/*data "template_file" "user_data-nginx" {
-  template = "${file("../files/user_data-nginx.tpl")}"
-}*/
-
-/*resource "aws_launch_configuration" "lConfigWeb" {
-  name            = "PeopleFinder-ASLC-WEB"
-  image_id        = "ami-334e134c"
-  instance_type   = "t2.micro"
-  security_groups = ["${aws_security_group.ec2sg.id}"]
-
-  //user_data       = "${data.template_file.user_data-nginx.rendered}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_autoscaling_group" "asgWeb" {
-  name                      = "PeopleFinder-ASG-WEB"
-  max_size                  = 2
-  min_size                  = 1
-  health_check_grace_period = 300
-  health_check_type         = "ELB"
-  desired_capacity          = 1
-  launch_configuration      = "${aws_launch_configuration.lConfigWeb.name}"
-
-  vpc_zone_identifier = [
-    "${aws_subnet.snELB1.id}",
-    "${aws_subnet.snELB2.id}",
-  ]
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  depends_on = ["aws_nat_gateway.ngw"]
-}*/
-
 resource "aws_lb_target_group" "lb-tg-web" {
   name     = "PeopleFinder-TG-WEB"
   port     = 80
@@ -233,11 +195,6 @@ resource "aws_lb_target_group" "lb-tg-web" {
     Env  = "${var.env}"
   }
 }
-
-/*resource "aws_autoscaling_attachment" "asg-tg-attach" {
-  autoscaling_group_name = "${aws_autoscaling_group.asgWeb.id}"
-  alb_target_group_arn   = "${aws_lb_target_group.lb-tg-web.arn}"
-}*/
 
 resource "aws_lb" "lb-web" {
   name               = "PeopleFinder-LB-WEB"
@@ -267,3 +224,5 @@ resource "aws_lb_listener" "forward" {
     type             = "forward"
   }
 }
+*/
+

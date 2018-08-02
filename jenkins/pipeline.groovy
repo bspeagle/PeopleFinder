@@ -42,6 +42,7 @@ node {
                 sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp ./terraform.tfstate s3://peoplefinder-files/terraform/prod/A/'
             }
         }
+    }
 
     stage('Deploy updates to ECS') {
         sh 'aws ecs update-service --cluster PeopleFinder-PROD-B --service PF-App-Deploy --force-new-deployment'

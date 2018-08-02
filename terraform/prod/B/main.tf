@@ -9,7 +9,7 @@ variable "app" {
 
 variable "env" {
   type    = "string"
-  default = "PROD"
+  default = "PROD-B"
 }
 
 provider "aws" {
@@ -19,25 +19,25 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "modules/vpc"
+  source = "../../modules/vpc"
   app = "${var.app}"
   env = "${var.env}"
 }
 
 module "secGroups" {
-  source = "modules/secGroups"
+  source = "../../modules/secGroups"
   app = "${var.app}"
   env = "${var.env}"
   vpc_id = "${module.vpc.vpc_id}"
 }
 
 module "iAM" {
-  source = "modules/iAM"
+  source = "../../modules/iAM"
   env = "${var.env}"
 }
 
 module "ecs" {
-  source = "modules/ecs"
+  source = "../../modules/ecs"
   app = "${var.app}"
   env = "${var.env}"
   vpc_id = "${module.vpc.vpc_id}"

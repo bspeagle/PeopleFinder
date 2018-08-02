@@ -1,0 +1,13 @@
+[
+    {
+        "name": "PeopleFinder",
+        "image": "367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder",
+        "cpu": 1024,
+        "memory": 512,
+        "essential": true,
+        "portMappings": [{
+            "containerPort": 80,
+            "hostPort": 80
+        }]
+    }
+]

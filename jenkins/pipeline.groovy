@@ -1,5 +1,3 @@
-import java.net.URL;
-
 node {
     stage('Clone source') {
         sh 'rm -f PeopleFinder'
@@ -50,20 +48,8 @@ node {
 
     stage('Check Env-B health') {
         echo 'Sleeping for 120 secs before starting...'
-        sleep 120
+        sleep 60
         echo 'Starting health check'
-        def checkURL = { urlString ->
-            return {
-                int status_code
-                URL URLserver = new URL("urlString");
-                URLConnection connection = (HttpURLConnection)URLserver.openConnection();
-                status_code = connection.getResponseCode();
-                println status_code;
-            }
-        }
-        String urlString
-        urlString = "http://peoplefinderB.teamspeagle.com"
-        def urlCheck = checkURL(urlString)
-        echo urlCheck()
+        sh 'curl --write-out "%{http_code}\n" --silent --output /dev/null "http://peoplefinderB.teamspeagle.com"'
     }
 }

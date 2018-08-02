@@ -61,7 +61,8 @@ node {
                 println status_code;
             }
         }
-        def urlString = "http://peoplefinderB.teamspeagle.com"
+        def urlString
+        urlString = "http://peoplefinderB.teamspeagle.com"
         def urlCheck = checkURL(urlString)
         echo urlCheck()
     }

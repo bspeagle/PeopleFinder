@@ -52,19 +52,17 @@ node {
         echo 'Sleeping for 120 secs before starting...'
         sleep 120
         echo 'Starting health check'
-        boolean fail=true
+        def checkURL = { urlString ->
+            return {
+                int status_code
+                URL URLserver = new URL("urlString");
+                URLConnection connection = (HttpURLConnection)URLserver.openConnection();
+                status_code = connection.getResponseCode();
+                println status_code;
+            }
+        }
         def urlString = "http://peoplefinderB.teamspeagle.com"
         def urlCheck = checkURL(urlString)
         echo urlCheck()
-    }
-
-    def checkURL = { urlString ->
-        return {
-            int status_code
-            URL URLserver = new URL("urlString");
-            URLConnection connection = (HttpURLConnection)URLserver.openConnection();
-            status_code = connection.getResponseCode();
-            println status_code;
-        }
     }
 }

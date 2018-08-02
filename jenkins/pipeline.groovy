@@ -49,10 +49,11 @@ node {
     }
 
     stage('Check Env-B health') {
-        def url
-        def message =""
+        echo 'Sleeping for 120 secs before starting...'
+        sleep 120
+        echo 'Starting health check'
         boolean fail=true
-        def urlString="http://peoplefinderB.teamspeagle.com"
+        def urlString = "http://peoplefinderB.teamspeagle.com"
         def urlCheck = checkURL(urlString)
         echo urlCheck()
     }

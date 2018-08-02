@@ -52,6 +52,13 @@ node {
         sleep 60
         echo 'Starting health check'
         sh 'statuscode=$(curl -o /dev/null --silent --head --write-out "%{http_code}\n" "peoplefinderb.teamspeagle.com")'
-        sh 'if [statuscode = "200"] then echo "Good to go" fi'
+        sh '''
+            if [ $statuscode='200' ]
+                then
+                    echo 'Hurray! It worked!'
+            else
+                exit 1
+            fi
+        '''
     }
 }

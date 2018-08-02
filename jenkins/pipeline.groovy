@@ -53,16 +53,16 @@ node {
         def message =""
         boolean fail=true
         def urlString="http://peoplefinderB.teamspeagle.com"
-        println checkURL(urlString)
+        echo checkURL(urlString)
+    }
 
-        def checkURL(urlString){
-            int status_code
-            def status_code
-            URL URLserver = new URL("urlString");
-            URLConnection connection = (HttpURLConnection)URLserver.openConnection();
-            status_code = connection.getResponseCode();
+    def checkURL(urlString){
+        int status_code
+        def status_code
+        URL URLserver = new URL("urlString");
+        URLConnection connection = (HttpURLConnection)URLserver.openConnection();
+        status_code = connection.getResponseCode();
 
-            return "+status_code+"
-        }
+        return "+status_code+"
     }
 }

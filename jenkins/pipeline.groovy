@@ -51,6 +51,7 @@ node {
         echo 'Sleeping for 120 secs before starting...'
         sleep 60
         echo 'Starting health check'
-        sh 'curl --write-out "%{http_code}\n" --silent --output /dev/null "http://peoplefinderB.teamspeagle.com"'
+        sh 'statuscode=$(curl -o /dev/null --silent --head --write-out "%{http_code}\n" "peoplefinderb.teamspeagle.com")'
+        sh 'echo statuscode'
     }
 }

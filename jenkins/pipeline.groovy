@@ -23,11 +23,11 @@ node {
     }
 
     stage('Terraform Env-B') {
-        dir ('terraform/prod/A') {
+        dir ('terraform/prod/B') {
             echo 'Getting .tfstate file from S3...'
             withCredentials([usernamePassword(credentialsId: 'peopleFinder-S3', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                 try {
-                    sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp s3://peoplefinder-files/terraform/prod/A/terraform.tfstate .'
+                    sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp s3://peoplefinder-files/terraform/prod/B/terraform.tfstate .'
                 }
                 catch(Exception ex) {
                     echo '.tfstate file does not exist yet. Moving on.'
@@ -39,7 +39,7 @@ node {
             }
             echo 'Uploading .tfstate to S3.'
             withCredentials([usernamePassword(credentialsId: 'peopleFinder-S3', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp ./terraform.tfstate s3://peoplefinder-files/terraform/prod/A/'
+                sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp ./terraform.tfstate s3://peoplefinder-files/terraform/prod/B/'
             }
         }
     }

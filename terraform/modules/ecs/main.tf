@@ -72,10 +72,12 @@ resource "aws_instance" "ec2" {
   lifecycle = {
     create_before_destroy = true
   }
+}
 
-  timeouts = {
-    delete = "2m"
-  }
+resource "aws_lb_target_group_attachment" "test" {
+  target_group_arn = "${aws_lb_target_group.lb-tg-web.arn}"
+  target_id        = "${aws_instance.ec2.id}"
+  port             = 80
 }
 
 resource "aws_ecs_task_definition" "pf_deploy_app" {

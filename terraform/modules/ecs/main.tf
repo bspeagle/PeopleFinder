@@ -68,6 +68,14 @@ resource "aws_instance" "ec2" {
   EOF
 
   iam_instance_profile = "${var.ecsIAMrole_profile_name}"
+
+  lifecycle = {
+    create_before_destroy = true
+  }
+
+  timeouts {
+    delete = "2m"
+  }
 }
 
 resource "aws_ecs_task_definition" "pf_deploy_app" {

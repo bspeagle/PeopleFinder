@@ -73,7 +73,7 @@ resource "aws_instance" "ec2" {
     create_before_destroy = true
   }
 
-  timeouts {
+  timeouts = {
     delete = "2m"
   }
 }

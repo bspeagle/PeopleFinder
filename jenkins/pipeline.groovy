@@ -49,7 +49,7 @@ node {
 
     stage('Check Env-B health') {
         echo 'Sleeping for 120 secs before starting...'
-        sleep 60
+        sleep 120
         echo 'Starting health check'
         sh 'statuscode=$(curl -o /dev/null --silent --head --write-out "%{http_code}\n" "peoplefinderb.teamspeagle.com")'
         sh '''
@@ -62,5 +62,5 @@ node {
         '''
     }
 
-    stage('')
+    stage('Swap DNS')
 }

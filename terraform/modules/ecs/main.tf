@@ -74,7 +74,7 @@ resource "aws_instance" "ec2" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "test" {
+resource "aws_lb_target_group_attachment" "ec2Attach" {
   target_group_arn = "${aws_lb_target_group.lb-tg-web.arn}"
   target_id        = "${aws_instance.ec2.id}"
   port             = 80

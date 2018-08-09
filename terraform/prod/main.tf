@@ -9,7 +9,7 @@ variable "app" {
 
 variable "env" {
   type    = "string"
-  default = "PROD-B"
+  default = "PROD"
 }
 
 provider "aws" {

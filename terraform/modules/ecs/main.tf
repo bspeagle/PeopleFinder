@@ -88,7 +88,7 @@ resource "aws_ecs_task_definition" "pf_deploy_app" {
   family                = "pf_app_deploy-${var.env}"
   network_mode          = "host"
   task_role_arn         = "${var.ecsIAMtaskrole_arn}"
-  container_definitions = "${file("../../files/service.json")}"
+  container_definitions = "${file("../files/service.json")}"
 }
 
 resource "aws_ecs_service" "pfAppDeploy_A" {

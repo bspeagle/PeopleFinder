@@ -104,7 +104,7 @@ resource "aws_ecs_service" "pfAppDeploy" {
     container_port   = 80
   }
 
-  depends_on = ["aws_instance.ec2_A", "aws_instance_ec2_B", "aws_lb.lb-web"]
+  depends_on = ["aws_instance.ec2_A", "aws_instance.ec2_B", "aws_lb.lb-web"]
 }
 
 resource "aws_route53_record" "www" {

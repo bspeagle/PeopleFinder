@@ -91,11 +91,11 @@ resource "aws_ecs_task_definition" "pf_deploy_app" {
   container_definitions = "${file("../files/service.json")}"
 }
 
-resource "aws_ecs_service" "pfAppDeploy_A" {
-  name            = "PF-App-Deploy_A"
+resource "aws_ecs_service" "pfAppDeploy" {
+  name            = "PF-App-Deploy"
   cluster         = "${aws_ecs_cluster.cluster1.id}"
   task_definition = "${aws_ecs_task_definition.pf_deploy_app.arn}"
-  desired_count   = 1
+  desired_count   = 2
   iam_role        = "${var.ecsIAMsvcrole_arn}"
 
   load_balancer {
@@ -104,7 +104,7 @@ resource "aws_ecs_service" "pfAppDeploy_A" {
     container_port   = 80
   }
 
-  depends_on = ["aws_instance.ec2_A", "aws_instance.ec2_B", "aws_lb.lb-web"]
+  depends_on = ["aws_instance.ec2_A", "aws_instance_ec2_B", "aws_lb.lb-web"]
 }
 
 resource "aws_route53_record" "www" {

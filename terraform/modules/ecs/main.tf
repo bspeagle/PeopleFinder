@@ -92,7 +92,7 @@ resource "aws_ecs_task_definition" "pf_deploy_app" {
 }
 
 resource "aws_ecs_service" "pfAppDeploy_A" {
-  name            = "PF-App-Deploy"
+  name            = "PF-App-Deploy_A"
   cluster         = "${aws_ecs_cluster.cluster1.id}"
   task_definition = "${aws_ecs_task_definition.pf_deploy_app.arn}"
   desired_count   = 1

@@ -56,10 +56,24 @@ resource "aws_ecs_cluster" "cluster1" {
   name = "PeopleFinder-${var.env}"
 }
 
-resource "aws_instance" "ec2" {
+resource "aws_instance" "ec2_A" {
   ami           = "ami-fbc1c684"
   instance_type = "t2.micro"
   subnet_id     = "${var.snELB1_id}"
+  security_groups = ["${var.ec2sg_id}"]
+
+  user_data = <<EOF
+    #!/bin/bash
+    echo ECS_CLUSTER=${aws_ecs_cluster.cluster1.name} >> /etc/ecs/ecs.config
+  EOF
+
+  iam_instance_profile = "${var.ecsIAMrole_profile_name}"
+}
+
+resource "aws_instance" "ec2_B" {
+  ami           = "ami-fbc1c684"
+  instance_type = "t2.micro"
+  subnet_id     = "${var.snELB2_id}"
   security_groups = ["${var.ec2sg_id}"]
 
   user_data = <<EOF
@@ -77,7 +91,7 @@ resource "aws_ecs_task_definition" "pf_deploy_app" {
   container_definitions = "${file("../../files/service.json")}"
 }
 
-resource "aws_ecs_service" "pfAppDeploy" {
+resource "aws_ecs_service" "pfAppDeploy_A" {
   name            = "PF-App-Deploy"
   cluster         = "${aws_ecs_cluster.cluster1.id}"
   task_definition = "${aws_ecs_task_definition.pf_deploy_app.arn}"
@@ -90,12 +104,12 @@ resource "aws_ecs_service" "pfAppDeploy" {
     container_port   = 80
   }
 
-  depends_on = ["aws_instance.ec2", "aws_lb.lb-web"]
+  depends_on = ["aws_instance.ec2_A", "aws_instance.ec2_B", "aws_lb.lb-web"]
 }
 
 resource "aws_route53_record" "www" {
   zone_id = "Z2QO00XWGGR1VX"
-  name    = "peoplefinderB.teamspeagle.com"
+  name    = "peoplefinder.teamspeagle.com"
   type    = "A"
 
   alias {

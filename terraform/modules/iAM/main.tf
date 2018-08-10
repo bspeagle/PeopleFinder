@@ -125,7 +125,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "ecsIAMrole" {
-  name = "peoplefinder_ecs_policy-${var.env}"
+  name = "peoplefinder-ecs-policy-${var.env}"
   role = "${aws_iam_role.ecsIAMrole.id}"
 
   policy = <<EOF

@@ -156,7 +156,7 @@ EOF
 }
 
 resource "aws_iam_instance_profile" "ecsIAMrole" {
-  name  = "peopleFinder_profile-${var.env}"
+  name  = "peopleFinder-profile-${var.env}"
   roles = ["${aws_iam_role.ecsIAMrole.name}"]
 }
 

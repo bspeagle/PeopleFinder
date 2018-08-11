@@ -33,10 +33,10 @@ node {
             }
             sh 'terraform init'
             configFileProvider([configFile(fileId: 'LMB-TF-VARS', targetLocation: '../files/')]) {
-                //sh 'terraform destroy -auto-approve -var-file="../files/terraform.tfvars"'
+                sh 'terraform destroy -auto-approve -var-file="../files/terraform.tfvars"'
                 try {
-                    sh 'export TF_LOG=TRACE'
-                    sh 'terraform apply -auto-approve -var-file="../files/terraform.tfvars"'
+                    //sh 'export TF_LOG=TRACE'
+                    //sh 'terraform apply -auto-approve -var-file="../files/terraform.tfvars"'
                     echo 'Uploading .tfstate to S3.'
                     withCredentials([usernamePassword(credentialsId: 'peopleFinder-S3', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp ./terraform.tfstate s3://peoplefinder-files/terraform/prod/'

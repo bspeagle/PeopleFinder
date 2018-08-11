@@ -82,6 +82,12 @@ resource "aws_instance" "ec2_B" {
   EOF
 
   iam_instance_profile = "${var.ecsIAMrole_profile_name}"
+
+  timeouts 
+  {
+    create = "3m"
+    delete = "3m"
+  }
 }
 
 resource "aws_ecs_task_definition" "pf_deploy_app" {

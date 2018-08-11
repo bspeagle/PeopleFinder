@@ -83,9 +83,7 @@ resource "aws_instance" "ec2_B" {
 
   iam_instance_profile = "${var.ecsIAMrole_profile_name}"
 
-  timeouts 
-  {
-    create = "3m"
+  timeouts {
     delete = "3m"
   }
 }

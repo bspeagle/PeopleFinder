@@ -11,6 +11,8 @@ node {
     }
 
     stage('Build Docker Image') {
+        sh 'whoami'
+        
         withCredentials([usernamePassword(credentialsId: 'awsCLI', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
             sh '$(AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws ecr get-login --no-include-email --region us-east-1)'
         }

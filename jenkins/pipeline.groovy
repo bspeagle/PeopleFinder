@@ -57,7 +57,7 @@ node {
 
     stage('Deploy updates to ECS ENV-A') {
         withCredentials([usernamePassword(credentialsId: 'awsCLI', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws ecs update-service --cluster PeopleFinder-PROD --service PF-App-Deploy --force-new-deployment'
+            sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD AWS_REGION="us-east-1" aws ecs update-service --cluster PeopleFinder-PROD --service PF-App-Deploy --force-new-deployment'
         }
     }
 

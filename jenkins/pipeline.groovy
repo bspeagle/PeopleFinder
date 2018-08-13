@@ -14,12 +14,12 @@ node {
         withCredentials([usernamePassword(credentialsId: 'awsCLI', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
             sh '$(AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws ecr get-login --no-include-email --region us-east-1)'
         }
-        sh 'sudo docker build . -t peoplefinder'
-        sh 'sudo docker tag peoplefinder:latest 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
+        sh 'docker build . -t peoplefinder'
+        sh 'docker tag peoplefinder:latest 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 
     stage('Push Docker Image to ECR') {
-        sh 'sudo docker push 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
+        sh 'docker push 367592122643.dkr.ecr.us-east-1.amazonaws.com/peoplefinder:latest'
     }
 
     stage('Terraform!') {

@@ -38,7 +38,7 @@ node {
             configFileProvider([configFile(fileId: 'TF-VARS', targetLocation: '../files/')]) {
                 sh 'terraform destroy -auto-approve -var-file="../files/terraform.tfvars"'
                 try {
-                    //sh 'terraform apply -auto-approve -var-file="../files/terraform.tfvars"'
+                    sh 'terraform apply -auto-approve -var-file="../files/terraform.tfvars"'
                     echo 'Uploading .tfstate to S3.'
                     withCredentials([usernamePassword(credentialsId: 'peopleFinder-S3', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws s3 cp ./terraform.tfstate s3://peoplefinder-files/terraform/prod/'
@@ -55,13 +55,13 @@ node {
         }
     }
 
-    stage('Deploy updates to ECS ENV-A') {
+    stage('Deploy updates to ECS ENV') {
         withCredentials([usernamePassword(credentialsId: 'awsCLI', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
             sh 'AWS_ACCESS_KEY_ID=$USERNAME AWS_SECRET_ACCESS_KEY=$PASSWORD aws ecs update-service --cluster PeopleFinder-PROD --service PF-App-Deploy --force-new-deployment'
         }
     }
 
-    stage('Check Env-A health') {
+    stage('Check Env health') {
         echo 'Sleeping for 120 secs before starting...'
         sleep 120
         echo 'Starting health check'

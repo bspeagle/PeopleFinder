@@ -1,5 +1,5 @@
 node {
-    stage("SSH time!") {
+    stage("SSH t-t-time!") {
         sshagent (credentials: ['aws-ec2-user']) {
             withCredentials([string(credentialsId: 'appServer', variable: 'IP')]) {
                 sh 'ssh -o StrictHostKeyChecking=no -l ec2-user $IP "rm -r -f PeopleFinder; git clone https://github.com/bspeagle/PeopleFinder.git; cd PeopleFinder; composer install --no-interaction; cd ..; rsync -av --progress PeopleFinder /var/www/html --exclude terraform --exclude jenkins --exclude .git --exclude .vscode; rm -r PeopleFinder"'

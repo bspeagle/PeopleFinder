@@ -9,7 +9,7 @@ node {
         }
         configFileProvider([configFile(fileId: 'bspeagle_PEM', targetLocation: '.')]) {
             sh 'ls -a'
-            sh 'scp -i bspeagle.pem PeopleFinder ec2-user@34.201.20.194:/home/ec2-user'
+            sh 'sudo scp -i bspeagle.pem PeopleFinder ec2-user@34.201.20.194:/home/ec2-user'
         }
     }
     stage("SSH t-t-time!") {

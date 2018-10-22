@@ -4,8 +4,8 @@ node {
         sh 'git clone https://github.com/bspeagle/PeopleFinder.git'
         dir ('PeopleFinder') {
             configFileProvider([configFile(fileId: 'peopleFinder_ENV', targetLocation: '.')]) {
-                sh 'nano pf.env'
                 sh 'mv pf.env .env'
+                sh 'cat .env'
             }
         }
         configFileProvider([configFile(fileId: 'bspeagle_PEM', targetLocation: '.')]) {

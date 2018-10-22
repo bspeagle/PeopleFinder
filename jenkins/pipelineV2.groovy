@@ -4,6 +4,7 @@ node {
         sh 'git clone https://github.com/bspeagle/PeopleFinder.git'
         dir ('PeopleFinder') {
             configFileProvider([configFile(fileId: 'peopleFinder_ENV', targetLocation: '.')]) {
+                sh 'mv pf.env .env'
                 sh 'ls'
                 sh 'scp -i ../bspeagle.pem ../PeopleFinder ec2-user@34.201.20.194:/home/ec2-user'
             }

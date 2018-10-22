@@ -8,8 +8,7 @@ node {
             }
         }
         configFileProvider([configFile(fileId: 'bspeagle_PEM', targetLocation: '.')]) {
-            sh 'ls -a -l'
-            
+            sh 'sudo chmod 600 bspeagle.pem'
             sh 'scp -i bspeagle.pem PeopleFinder ec2-user@34.201.20.194:/home/ec2-user'
         }
     }

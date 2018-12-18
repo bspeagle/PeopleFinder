@@ -17,7 +17,7 @@ ENV APP_HOME /var/www/html
 #change uid and gid of apache to docker user uid/gid
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 
-#copy source files and run composer
+#copy source files
 COPY . $APP_HOME
 
 # install all PHP dependencies
